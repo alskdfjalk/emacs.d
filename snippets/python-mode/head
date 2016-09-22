@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+#!/usr/bin/python3
+# -------------------------------------------------------------------------
+# Filename: `(current-buffer)`
+# Author: CJ
+# Date: `(format-time-string "%Y-%m-%d %H:%M:%S" (current-time))`
+# Description: $1
+# Usage:
+# Notes:
+#  -------------------------------------------------------------------------

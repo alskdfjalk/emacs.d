@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+#!/bin/bash
+#-------------------------------------------------------------------------
+# Filename: `(current-buffer)`
+# Author: CJ
+# Date: `(format-time-string "%Y-%m-%d %H:%M:%S" (current-time))`
+# Description:
+# Usage:
+# Notes:
+#  -------------------------------------------------------------------------
+$1

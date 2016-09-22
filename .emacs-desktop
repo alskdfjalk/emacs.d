@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Sep 22 12:18:05 2016
+;; Desktop file format version 206
+;; Emacs version 24.5.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22499 23421 528194 535000) (desktop . "206") "cj@office" nil nil ((((font-backend xft x) (font . "-PfEd-AR PL UKai CN-normal-normal-normal-*-16-*-*-*-*-0-iso10646-1") (font-parameter . "AR PL UKai CN") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars . left) (foreground-color . "#F8F8F2") (background-color . "#272822") (mouse-color . "#F8F8F2") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 12) (right-fringe . 12) (scroll-bar-foreground) (scroll-bar-background) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (wait-for-wm . t) (fullscreen . maximized) (tool-bar-position . top) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 18) (alpha) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#F8F8F2") (environment) (frameset--id . "ECA8-5EB8-8329-D2A3") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . ":0") (explicit-name) (visibility . t) (height . 59) (width . 235) (left + -3840) (top . 16)) ((min-height . 16) (min-width . 20) (min-height-ignore . 15) (min-width-ignore . 16) (min-height-safe . 4) (min-width-safe . 4) (min-pixel-height . 288) (min-pixel-width . 160) (min-pixel-height-ignore . 270) (min-pixel-width-ignore . 128) (min-pixel-height-safe . 72) (min-pixel-width-safe . 32)) hc (pixel-width . 1926) (pixel-height . 1044) (total-width . 241) (total-height . 58) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (vc (pixel-width . 376) (pixel-height . 1044) (total-width . 47) (total-height . 58) (normal-height . 1.0) (normal-width . 0.19522326064382134) (combination-limit) (leaf (pixel-width . 376) (pixel-height . 306) (total-width . 47) (total-height . 17) (normal-height . 0.2931034482758621) (normal-width . 1.0) (buffer " *ECB Directories*" (selected) (hscroll . 0) (fringes 12 12 nil) (margins nil) (scroll-bars 18 3 t nil) (vscroll . 0) (dedicated . t) (point . 1) (start . 1))) (leaf (pixel-width . 376) (pixel-height . 252) (total-width . 47) (total-height . 14) (normal-height . 0.24137931034482757) (normal-width . 1.0) (buffer " *ECB Sources*" (selected) (hscroll . 0) (fringes 12 12 nil) (margins nil) (scroll-bars 18 3 t nil) (vscroll . 0) (dedicated . t) (point . 1) (start . 1))) (leaf (pixel-width . 376) (pixel-height . 306) (total-width . 47) (total-height . 17) (normal-height . 0.29310344827586204) (normal-width . 1.0) (buffer " *ECB Methods*" (selected) (hscroll . 0) (fringes 12 12 nil) (margins nil) (scroll-bars 18 3 t nil) (vscroll . 0) (dedicated . t) (point . 1) (start . 1))) (leaf (last . t) (pixel-width . 376) (pixel-height . 180) (total-width . 47) (total-height . 10) (normal-height . 0.1724137931034483) (normal-width . 1.0) (buffer " *ECB History*" (selected) (hscroll . 0) (fringes 12 12 nil) (margins nil) (scroll-bars 18 3 t nil) (vscroll . 0) (dedicated . t) (point . 1) (start . 1)))) (leaf (last . t) (pixel-width . 1550) (pixel-height . 1044) (total-width . 194) (total-height . 58) (normal-height . 1.0) (normal-width . 0.8047767393561787) (buffer "custom.el" (selected . t) (hscroll . 0) (fringes 12 12 nil) (margins 5) (scroll-bars 18 3 t nil) (vscroll . 0) (dedicated) (point . 10054) (start . 8126)))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("cj" "help" "python" "mysql" "gi" "sync" "rsync" "ln " "ews.sunits" "save" "setenv" "quick" "python-shell" "company" "theme"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/cj/.emacs.d/custom.el" "/home/cj/tmp/test.py" "/home/cj/.emacs.d/init.el" "/home/cj/workspace/shield/account.org" "/home/cj/workspace/online-config/permission.json" "/home/cj/workspace/online-config/capacity.json" "/home/cj/workspace/online-config/xiangbangbang.cn.json" "/home/cj/workspace/saltroots/salt/scripts/deploy/git_deploy.sh" "/sudo:root@office:/etc/hosts" "/sudo::/etc/hosts" "/home/cj/.emacs.d/org-mode.el" "/home/cj/workspace/ops/monitor/check_nagios.py" "~/workspace/saltroots/" "/home/cj/workspace/list.org" "~/tmp/test.c" "~/.emacs.d/elpa/pdb-mode-20150128.951/pdb-mode-autoloads.el" "/home/cj/tmp/test.sh" "/home/cj/tmp/test.c" "~/.emacs.d/elpa/company-quickhelp-20160826.806/company-quickhelp-autoloads.el" "~/.emacs.d/elpa/pos-tip-20150318.813/pos-tip-autoloads.el" "~/.emacs.d/init.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/cj/.emacs.d/custom.el"
+  "custom.el"
+  'emacs-lisp-mode
+  '(global-whitespace-mode linum-mode autopair-mode helm-mode ecb-minor-mode whole-line-or-region-mode)
+  10054
+  '(10054 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (overwrite-mode)))
+

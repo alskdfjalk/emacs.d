@@ -1,0 +1,10 @@
+*~
+#*#
+.#*
+*.pyc
+*#
+.cask
+.elc
+.emacs.desktop.lock
+ido.last
+.session

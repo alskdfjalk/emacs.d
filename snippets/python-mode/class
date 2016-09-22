@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Init class a class
+# key: class
+# binding: direct-keybinding
+# --
+import $0
+
+class ${1:classname}:
+    """Do something for ${1: classname}
+    """
+    def __init__(self, ${2:selfname}):
+	self.$2 = $2
