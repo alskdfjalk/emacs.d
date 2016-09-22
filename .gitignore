@@ -6,5 +6,7 @@
 .cask
 .elc
 .emacs.desktop.lock
+.emacs-desktop
 ido.last
 .session
+languages/

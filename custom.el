@@ -140,18 +140,14 @@
 (pyvenv-activate "~/.emacs.d/languages/python")
 (when (require 'elpy nil t)
   (elpy-enable))
-;; (setq python-check-command "flake8")
+(setq python-check-command "~/.emacs.d/languages/python/bin/flake8")
 (setq elpy-rpc-python-command "python3")
-;; (setq elpy-interactive-python-command "~/.emacs.d/languages/python/bin/ipython3")
-;; (setq python-default-interpreter "~/.emacs.d/languages/python/bin/ipython3")
-;; (setq python-python-command-args "-i")
-; (elpy-use-ipython "~/.emacs.d/languages/python/bin/ipython3")
 ; (elpy-use-ipython)
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (setq-default python-indent 8)
 (setq-default py-indent-offset 8)
-(global-set-key [C-tab] 'elpy-company-backend)
+(setq flycheck-python-pycompile-executable "python3")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -274,3 +270,4 @@
 ; =============================================================
 (add-hook 'shell-mode-hook company-mode)
 (add-hook 'c-mode-hook company-mode)
+(global-set-key [C-tab] 'elpy-company-backend)
