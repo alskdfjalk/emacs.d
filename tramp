@@ -1,10 +1,8 @@
-;; -*- emacs-lisp -*- <16/09/21 19:18:45 /home/cj/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <16/09/22 18:18:20 /home/cj/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-((["scp" nil "sudo" nil nil]
-  nil)
- (["sudo" "root" "office" nil nil]
+((["sudo" "root" "office" nil nil]
   ("locale" "LC_ALL=en_US.utf8")
   ("uname" "Linux 4.7.3-gentoo-zhangyafeng")
   ("test" "test")
@@ -25,4 +23,6 @@
   ("tmpdir" "/sudo:root@office:/tmp")
   ("touch-t" t)
   ("touch" "\\touch")
-  ("ls" "/bin/ls --color=never")))
+  ("ls" "/bin/ls --color=never"))
+ (["scp" nil "sudo" nil nil]
+  nil))

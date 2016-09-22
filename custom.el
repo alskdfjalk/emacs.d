@@ -78,8 +78,6 @@
 	       ))
 
 
-
-
 ; ==============================================================
 ; =                     anaconda
 ; =============================================================
@@ -140,14 +138,19 @@
 (pyvenv-activate "~/.emacs.d/languages/python")
 (when (require 'elpy nil t)
   (elpy-enable))
-(setq python-check-command "~/.emacs.d/languages/python/bin/flake8")
 (setq elpy-rpc-python-command "python3")
+(setq elpy-interactive-python-command "~/.emacs.d/languages/python/bin/ipython")
 ; (elpy-use-ipython)
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (setq-default python-indent 8)
 (setq-default py-indent-offset 8)
 (setq flycheck-python-pycompile-executable "python3")
+(add-hook 'python-mode-hook 'hs-minor-mode)
+;; (setq
+;;  python-shell-interpreter "python3"
+;;  python-shell-interpreter-args "--profile=dev"
+;; )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -160,32 +163,6 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (helm-mode 1)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                        各窗口间切换(ecb-mode)                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ecb模式
-(load-file "~/.emacs.d/packages/cedet/cedet.el")
-(require 'cedet)
-(add-to-list 'load-path "~/.emacs.d/packages/ecb")
-
-(require 'ecb)
-(setq ecb-tip-of-the-day nil)
-(setq ecb-auto-activate t ecb-tip-of-the-day nil)
-;; (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-;;				  global-semanticdb-minor-mode
-;;				  global-semantic-idle-summary-mode
-;;				  global-semantic-mru-bookmark-mode))
-(global-set-key [f12] 'ecb-activate)
-(global-set-key [C-f12] 'ecb-deactivate)
-;; (semantic-mode t)
-					; ;; ecb 窗口尺寸
-(setq   ecb-tip-of-the-day nil
-	ecb-tree-indent 5
-	ecb-windows-height 0.5
-	ecb-windows-width 0.20
-	ecb-auto-compatibility-check nil
-	ecb-version-check nil)
-; 配置Semantic的检索范围:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -243,9 +220,9 @@
        '((c-mode . "k&r") (other . "gnu")))
 
 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  ;;                           设置GDB                                          ;;
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  ; http://www.inet.net.nz/~nickrob/multi-gdb-ui.el
  ; http://www.inet.net.nz/~nickrob/multi-gud.el
  (add-to-list 'load-path "~/.emacs.d/packages/gdb")
@@ -271,3 +248,33 @@
 (add-hook 'shell-mode-hook company-mode)
 (add-hook 'c-mode-hook company-mode)
 (global-set-key [C-tab] 'elpy-company-backend)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        各窗口间切换(ecb-mode)                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; ecb模式
+(load-file "~/.emacs.d/packages/cedet/cedet.el")
+(require 'cedet)
+(add-to-list 'load-path "~/.emacs.d/packages/ecb")
+(require 'ecb)
+(setq stack-trace-on-error nil) ;;don’t popup Backtrace window
+(setq ecb-tip-of-the-day nil)
+(setq ecb-auto-activate t)
+(setq ecb-layout-name "left15")
+(setq ecb-options-version "2.40")
+(setq ecb-primary-secondary-mouse-buttons (quote mouse-1–mouse-2))
+(setq ecb-source-path (quote ("~/workspace")))
+(setq auto-update-methods-after-save t)
+(setq auto-expand-token-tree t)
+(setq ecb-expand-methods-nodes t)
+(setq ecb-methods-nodes-expand-spec t)
+(setq bucket-token-display t)
+(global-set-key [f12] 'ecb-activate)
+(global-set-key [C-f12] 'ecb-deactivate)
+;; ecb 窗口尺寸
+(setq ecb-tip-of-the-day nil
+	ecb-tree-indent 5
+	; ecb-windows-height 0.5
+	ecb-windows-width 0.20
+	ecb-auto-compatibility-check nil
+	ecb-version-check nil)
