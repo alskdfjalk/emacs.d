@@ -17,3 +17,4 @@
 
 (load-file "~/.emacs.d/custom.el")
 (load-file "~/.emacs.d/org-mode.el")
+(put 'upcase-region 'disabled nil)

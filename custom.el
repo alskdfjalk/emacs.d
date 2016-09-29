@@ -70,26 +70,29 @@
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+	     '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives
 	       '("gnu" . "http://elpa.gnu.org/packages/")
 	       ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        auto-complete                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'undo-tree)
+(global-undo-tree-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        auto-complete                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'auto-complete)
+(global-auto-complete-mode)
 
 ; ==============================================================
 ; =                     anaconda
 ; =============================================================
-(add-hook 'python-mode-hook (lambda ()
-			      (require 'sphinx-doc)
-			      (sphinx-doc-mode t)))
-
-; ==============================================================
-; =                     anaconda
-; =============================================================
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(require 'sphinx-doc)
 
 ; ==============================================================
 ; =                     session
@@ -120,33 +123,48 @@
 (add-hook 'sh-mode-hook '(lambda () (autopair-mode)))
 (add-hook 'c-mode-hook '(lambda () (autopair-mode)))
 (add-hook 'html-mode-hook '(lambda () (autopair-mode)))
-(add-hook 'python-mode-hook '(lambda () (autopair-mode)))
+; (add-hook 'python-mode-hook '(lambda () (autopair-mode)))
 
 ; ==============================================================
 ; =                     python-mode
 ; =============================================================
+(defun my-own-python ()
+  (local-set-key (kbd "C-.") 'elpy-goto-definition)
+  (local-set-key (kbd "C-,") 'pop-tag-mark)
+  (py-autopep8-enable-on-save)
+  (hs-minor-mode t)
+  (auto-complete-mode -1)
+  (autopair-mode t)
+  (anaconda-mode t)
+  (anaconda-eldoc-mode t)
+  (elpy-mode t)
+  (sphinx-doc-mode t)
+  )
+(add-hook 'python-mode-hook 'my-own-python)
+
 (setenv "WORKON_HOME"
 	(concat
-	 "~/.emacs.d/languages/python")
+	 "~/.local/python3")
 	)
-(setenv "PYTHONPATH" "~/.emacs.d/languages/python/")
+(setenv "PYTHONPATH" "~/.local/")
 (defadvice virtualenv-activate (after virtual-pdb)
   (custom-set-variables
      '(gud-pdb-command-name
        (concat virtualenv-active "/usr/bin/pdb" ))))
 (ad-activate 'virtualenv-activate)
-(pyvenv-activate "~/.emacs.d/languages/python")
+(pyvenv-activate "~/.local")
 (when (require 'elpy nil t)
   (elpy-enable))
 (setq elpy-rpc-python-command "python3")
-(setq elpy-interactive-python-command "~/.emacs.d/languages/python/bin/ipython")
+(setq elpy-rpc-backend "jedi")
+(setq elpy-interactive-python-command "~/.local/bin/ipython")
+(setq python-check-command "~/.local/bin/flake8")
 ; (elpy-use-ipython)
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (setq-default python-indent 8)
 (setq-default py-indent-offset 8)
 (setq flycheck-python-pycompile-executable "python3")
-(add-hook 'python-mode-hook 'hs-minor-mode)
 ;; (setq
 ;;  python-shell-interpreter "python3"
 ;;  python-shell-interpreter-args "--profile=dev"
@@ -167,9 +185,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- (add-to-list 'load-path "~/.emacs.d/packages/window-number")
- (require 'window-number)
- (global-set-key (kbd "C-x o") 'window-number-switch)
+ ;; (add-to-list 'load-path "~/.emacs.d/packages/window-number")
+ ;; (require 'window-number)
+(global-set-key (kbd "M-p") 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+; (setq aw-background nil)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -235,7 +256,7 @@
 ; =                     autopep8
 ; =============================================================
 (require 'py-autopep8)
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 ; ==============================================================
 ; =                     company-quickhelp
@@ -260,7 +281,7 @@
 (setq stack-trace-on-error nil) ;;don’t popup Backtrace window
 (setq ecb-tip-of-the-day nil)
 (setq ecb-auto-activate t)
-(setq ecb-layout-name "left15")
+(setq ecb-layout-name "left13")
 (setq ecb-options-version "2.40")
 (setq ecb-primary-secondary-mouse-buttons (quote mouse-1–mouse-2))
 (setq ecb-source-path (quote ("~/workspace")))

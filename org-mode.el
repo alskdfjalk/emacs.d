@@ -20,27 +20,48 @@
 	     )
       )
 (setq org-html-head "<link rel=\"stylesheet\" type=\"text/css\"
-    href=\"/home/cj/.emacs.d/org/css/htmlize.css\"/>\n
+    href=\"/css/htmlize.css\"/>\n
 <link rel=\"stylesheet\" type=\"text/css\"
-    href=\"/home/cj/.emacs.d/org/css/bigblow.css\"/>\n
+    href=\"/css/bigblow.css\"/>\n
 <link rel=\"stylesheet\" type=\"text/css\"
-    href=\"/home/cj/.emacs.d/org/css/hideshow.css\"/>\n
+    href=\"/css/hideshow.css\"/>\n
 
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery-1.11.0.min.js\"></script>\n
+    src=\"/js/jquery-1.11.0.min.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery-ui-1.10.2.min.js\"></script>\n
+    src=\"/js/jquery-ui-1.10.2.min.js\"></script>\n
 
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery.localscroll-min.js\"></script>\n
+    src=\"/js/jquery.localscroll-min.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery.scrollTo-1.4.3.1-min.js\"></script>\n
+    src=\"/js/jquery.scrollTo-1.4.3.1-min.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery.zclip.min.js\"></script>\n
+    src=\"/js/jquery.zclip.min.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/bigblow.js\"></script>\n
+    src=\"/js/bigblow.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/hideshow.js\"></script>\n
+    src=\"/js/hideshow.js\"></script>\n
 <script type=\"text/javascript\"
-    src=\"/home/cj/.emacs.d/org/js/jquery.stickytableheaders.min.js\"></script>\n"
+    src=\"/js/jquery.stickytableheaders.min.js\"></script>\n"
       )
+
+(setq org-publish-project-alist
+      '(
+
+  ("org-blog"
+	  ;; Path to your org files.
+	  :base-directory "~/workspace/cj4777.github.io/org/"
+	  :base-extension "org"
+
+	  ;; Path to your Jekyll project.
+	  :publishing-directory "~/workspace/jekyll/_post/"
+	  :publishing-function org-html-export-to-html
+	  :recursive t
+	  :headline-levels 4
+	  :html-extension "html"
+	  :body-only t ;; Only export section between <body> </body>
+    )
+
+    ("blog" :components ("org-blog"))
+
+))
