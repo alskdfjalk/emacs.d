@@ -2,6 +2,7 @@
 ; =                     global
 ; =============================================================
 (toggle-truncate-lines -1)
+(setq default-line-spacing 0)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (global-set-key (kbd "C--") 'undo)
@@ -32,16 +33,15 @@
 (setq browse-url-browser-function 'google-chrome-stable)
 (setq scroll-margin 5 scroll-conservatively 10000) ;; 平滑翻页
 ;; term 粘贴
-(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-y") 'term-paste)))
+; (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-y") 'term-paste)))
 ;; 主题
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/monokai")
 (load-theme 'monokai t)
-; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/molokai-theme")
-; (load-theme 'molokai t)
-;; (add-to-list 'load-path "~/.emacs.d/themes/color-theme/")
-;; (require 'color-theme)
-;; (color-theme-initialize)
-;; (color-theme-tty-dark)
+;; 全局缩进
+(setq-default tabs-width 8)
+(setq-default indent-tabs-mode t)
+(setq sh-basic-offset 8)
+
 (add-to-list 'load-path "~/.emacs.d/packages")
 ;; 保存时删除多余的空格和TAB
 (global-set-key (kbd "C-x C-s") '(lambda()
@@ -87,7 +87,19 @@
 ;;                        auto-complete                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'auto-complete)
-(global-auto-complete-mode)
+(require 'auto-complete-config)
+(ac-config-default)
+(global-auto-complete-mode t)
+(auto-complete-mode t)
+
+; ==============================================================
+; =                     conf-mode
+; =============================================================
+(defun my-own-conf-mode ()
+  (auto-complete-mode t)
+  (global-set-key [C-tab] 'auto-complete)
+  )
+(add-hook 'conf-mode-hook 'my-own-conf-mode)
 
 ; ==============================================================
 ; =                     anaconda
@@ -121,7 +133,6 @@
 (autopair-global-mode)
 (add-hook 'js-mode-hook '(lambda () (autopair-mode)))
 (add-hook 'sh-mode-hook '(lambda () (autopair-mode)))
-(add-hook 'c-mode-hook '(lambda () (autopair-mode)))
 (add-hook 'html-mode-hook '(lambda () (autopair-mode)))
 ; (add-hook 'python-mode-hook '(lambda () (autopair-mode)))
 
@@ -132,14 +143,17 @@
   (local-set-key (kbd "C-.") 'elpy-goto-definition)
   (local-set-key (kbd "C-,") 'pop-tag-mark)
   (py-autopep8-enable-on-save)
-  (hs-minor-mode t)
   (auto-complete-mode -1)
   (autopair-mode t)
   (anaconda-mode t)
   (anaconda-eldoc-mode t)
   (elpy-mode t)
+  (hs-minor-mode t)
   (sphinx-doc-mode t)
+  (whitespace-mode t)
+  (yas-global-mode t)
   )
+(require 'py-autopep8)
 (add-hook 'python-mode-hook 'my-own-python)
 
 (setenv "WORKON_HOME"
@@ -175,8 +189,6 @@
 ;;                        各窗口间切换(ecb-mode)                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm模式
-(add-to-list 'load-path "~/.emacs.d/packages/emacs-async")
-(add-to-list 'load-path "~/.emacs.d/packages/helm")
 (require 'helm-config)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (helm-mode 1)
@@ -225,21 +237,11 @@
   (interactive)
   (compile (concat "make")))
  (global-set-key (kbd "C-c 2") 'quick-make)
-
- ; 代码折叠
- (add-hook 'c-mode-hook 'hs-minor-mode)
-;
-;
-  (global-set-key (kbd "C-c =") 'hs-show-all)
-  (global-set-key (kbd "C-c -") 'hs-hide-all)
-  (global-set-key (kbd "C-c c =") 'hs-show-block)
-  (global-set-key (kbd "C-c c -") 'hs-hide-block)
-  (global-set-key (kbd "C-c [") 'comment-region)
- (global-set-key (kbd "C-c ]") 'uncomment-region)
-;
- (setq c-default-style
-       '((c-mode . "k&r") (other . "gnu")))
-
+ (defun quick-clean ()
+  "A quick compile funciton for C"
+  (interactive)
+  (compile (concat "make clean ")))
+ (global-set-key (kbd "C-c 3") 'quick-clean)
 
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  ;;                           设置GDB                                          ;;
@@ -248,15 +250,16 @@
  ; http://www.inet.net.nz/~nickrob/multi-gud.el
  (add-to-list 'load-path "~/.emacs.d/packages/gdb")
  (setq gdb-many-windows t)
+ (setq gdb-show-main t)
  (load-library "multi-gud.el")
  (load-library "multi-gdb-ui.el")
  (global-set-key [f11] 'gdb)
 
 ; ==============================================================
-; =                     autopep8
+; =                     minimap-mode
 ; =============================================================
-(require 'py-autopep8)
-; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+(minimap-mode t)
+(setq minimap-window-location 'right)
 
 ; ==============================================================
 ; =                     company-quickhelp
@@ -267,7 +270,6 @@
 ; =                     company-mode
 ; =============================================================
 (add-hook 'shell-mode-hook company-mode)
-(add-hook 'c-mode-hook company-mode)
 (global-set-key [C-tab] 'elpy-company-backend)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -281,7 +283,7 @@
 (setq stack-trace-on-error nil) ;;don’t popup Backtrace window
 (setq ecb-tip-of-the-day nil)
 (setq ecb-auto-activate t)
-(setq ecb-layout-name "left13")
+(setq ecb-layout-name "leftright2")
 (setq ecb-options-version "2.40")
 (setq ecb-primary-secondary-mouse-buttons (quote mouse-1–mouse-2))
 (setq ecb-source-path (quote ("~/workspace")))
@@ -299,3 +301,71 @@
 	ecb-windows-width 0.20
 	ecb-auto-compatibility-check nil
 	ecb-version-check nil)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        evil
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; (evil-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        C-IDE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/packages/cc-mode-5.33")
+(add-to-list 'load-path "~/.emacs.d/packages/helm-gtags")
+(require 'helm-gtags)
+(setq-default c-set-style "cc-mode"
+	      c-basic-offset 8
+	      tab-width 8
+	      indent-tabs-mode t)
+(defun artm-guess-c-style ()
+  (let ((style
+	 (assoc-default buffer-file-name artm-c-styles-alist
+			(lambda (pattern path)
+			  (or (not pattern)
+			      (and (stringp path)
+				   (string-match pattern path))))
+			;; factory default (in case you forget
+			;; to add (nil . "some style") to
+			;; artm-c-styles-alist
+			'(nil . "linux"))))
+    (cond
+     ((stringp style) (c-set-style style))
+     ((functionp style) (style)))))
+(defun call-c-header-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'achead:include-directories '"/usr/include")
+  (add-to-list 'company-backends 'company-c-headers)
+  )
+;; (defun my:add-semantic-to-autocomplete()
+;;   (semantic-mode t)
+;;   (global-ede-mode t)
+;;   (add-to-list 'ac-sources 'ac-source-semantic)
+;;   )
+(add-hook 'c-mode-hook '(lambda ()
+			  (helm-gtags-mode)
+			  (hs-minor-mode)
+			  (autopair-mode)
+			  (auto-complete-mode)
+			  (call-c-header-init)
+			  (yas-global-mode)
+			  )
+	  )
+
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-cg"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(eval-after-load "helm-gtags"
+  '(progn
+     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+     (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
+     (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
+     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
+
+(load-file "~/.emacs.d/resetkey.el")

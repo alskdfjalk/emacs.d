@@ -11,3 +11,4 @@ languages/
 tramp
 ac-comphist.dat
 *.elc
+semanticdb/

@@ -1,0 +1,7 @@
+(global-set-key (kbd "C-c =") 'hs-show-all)
+(global-set-key (kbd "C-c -") 'hs-hide-all)
+(global-set-key (kbd "C-c c =") 'hs-show-block)
+(global-set-key (kbd "C-c c -") 'hs-hide-block)
+(global-set-key (kbd "C-c [") 'comment-region)
+(global-set-key (kbd "C-c ]") 'uncomment-region)
+(global-set-key (kbd "C-c ;") 'iedit-mode)
