@@ -5,3 +5,9 @@
 (global-set-key (kbd "C-c [") 'comment-region)
 (global-set-key (kbd "C-c ]") 'uncomment-region)
 (global-set-key (kbd "C-c ;") 'iedit-mode)
+(global-set-key (kbd "C-=") 'toggle-input-method)
+(global-set-key (kbd "M-s M-s") 'replace-string)
+(global-set-key (kbd "C-c o") 'open-with)
+ ;与 pyim-probe-dynamic-english 配合，将光标前字符转换为中文
+; (global-set-key (kbd "M-j") 'pyim-convert-code-at-point)
+; ("C-;" . pyim-delete-word-from-personal-buffer)))

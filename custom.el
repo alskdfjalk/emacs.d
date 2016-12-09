@@ -1,6 +1,8 @@
-; ==============================================================
+; ===================================
 ; =                     global
-; =============================================================
+; ===================================
+(yas-global-mode)
+(company-mode)
 (toggle-truncate-lines -1)
 (setq default-line-spacing 0)
 (menu-bar-mode -1)
@@ -24,8 +26,6 @@
 ;;显示时间的格式
 (setq display-time-format "%Y-%m-%d %A %H:%M")
 (setq column-number-mode t)
-;;字符串替换快捷键
-(global-set-key (kbd "M-s M-s") 'replace-string)
 ;;行号格式
 (setq linum-format "%4d ")
 (global-linum-mode t)
@@ -125,23 +125,31 @@
 (desktop-save-mode 1)
 (desktop-read)
 
-; ==============================================================
+; ===========================================================
 ; =                     autopair
-; =============================================================
+; ===========================================================
 (add-to-list 'load-path "~/.emacs.d/packages/autopair")
 (require 'autopair)
 (autopair-global-mode)
 (add-hook 'js-mode-hook '(lambda () (autopair-mode)))
-(add-hook 'sh-mode-hook '(lambda () (autopair-mode)))
 (add-hook 'html-mode-hook '(lambda () (autopair-mode)))
 ; (add-hook 'python-mode-hook '(lambda () (autopair-mode)))
 
-; ==============================================================
+; ===========================================================
+; =                     shell
+; ===========================================================
+(add-hook 'sh-mode-hook '(lambda ()
+			   (autopair-mode)
+			   (hs-minor-mode)
+			   )
+	  )
+
+; ============================================================
 ; =                     python-mode
-; =============================================================
+; ============================================================
 (defun my-own-python ()
-  (local-set-key (kbd "C-.") 'elpy-goto-definition)
-  (local-set-key (kbd "C-,") 'pop-tag-mark)
+  (local-set-key (kbd "M-.") 'elpy-goto-definition)
+  (local-set-key (kbd "M-,") 'pop-tag-mark)
   (py-autopep8-enable-on-save)
   (auto-complete-mode -1)
   (autopair-mode t)
@@ -193,6 +201,25 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (helm-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        使用 xdg-open 打开文件             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun prelude-open-with (arg)
+  "Open visited file in default external program.
+With a prefix ARG always prompt for command to use."
+  (interactive "P")
+  (when buffer-file-name
+    (shell-command (concat
+		    (cond
+		     ((and (not arg) (eq system-type 'darwin)) "open")
+		     ((and (not arg) (member system-type
+					     '(gnu gnu/linux gnu/kfreebsd)))
+		      "exo-open")
+		     (t (read-shell-command "Open current file with: ")))
+		    " "
+		    (shell-quote-argument buffer-file-name)))))
+;; 默认用 google-chrome 作浏览器
+(setq browse-url-generic-program "google-chrome")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -249,31 +276,31 @@
  ; http://www.inet.net.nz/~nickrob/multi-gdb-ui.el
  ; http://www.inet.net.nz/~nickrob/multi-gud.el
  (add-to-list 'load-path "~/.emacs.d/packages/gdb")
- (setq gdb-many-windows t)
- (setq gdb-show-main t)
  (load-library "multi-gud.el")
  (load-library "multi-gdb-ui.el")
  (global-set-key [f11] 'gdb)
+ (setq gdb-many-windows t)
+ (setq gdb-show-main t)
 
-; ==============================================================
+; ===================================
 ; =                     minimap-mode
-; =============================================================
+; ===================================
 (minimap-mode t)
 (setq minimap-window-location 'right)
 
-; ==============================================================
-; =                     company-quickhelp
-; =============================================================
+; ===================================
+;                    company-quickhelp
+; ===================================
 (company-quickhelp-mode 1)
 
-; ==============================================================
+; ===================================
 ; =                     company-mode
-; =============================================================
-(add-hook 'shell-mode-hook company-mode)
+; ===================================
 (global-set-key [C-tab] 'elpy-company-backend)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                        各窗口间切换(ecb-mode)                            ;;
+;;                        各窗口间切换(ecb-mode)              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; ecb模式
 (load-file "~/.emacs.d/packages/cedet/cedet.el")
@@ -296,8 +323,8 @@
 (global-set-key [C-f12] 'ecb-deactivate)
 ;; ecb 窗口尺寸
 (setq ecb-tip-of-the-day nil
-	ecb-tree-indent 5
-	; ecb-windows-height 0.5
+	ecb-tree-indent 3
+	; ecb-windows-height 0.8
 	ecb-windows-width 0.20
 	ecb-auto-compatibility-check nil
 	ecb-version-check nil)
@@ -367,5 +394,3 @@
      (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
      (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
      (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
-
-(load-file "~/.emacs.d/resetkey.el")
