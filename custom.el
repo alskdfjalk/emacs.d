@@ -148,8 +148,8 @@
 ; =                     python-mode
 ; ============================================================
 (defun my-own-python ()
-  (local-set-key (kbd "M-.") 'elpy-goto-definition)
-  (local-set-key (kbd "M-,") 'pop-tag-mark)
+  (local-set-key (kbd "C-.") 'elpy-goto-definition)
+  (local-set-key (kbd "C-,") 'pop-tag-mark)
   (py-autopep8-enable-on-save)
   (auto-complete-mode -1)
   (autopair-mode t)
@@ -294,6 +294,13 @@ With a prefix ARG always prompt for command to use."
 (company-quickhelp-mode 1)
 
 ; ===================================
+;                    tpp-mode
+; ===================================
+; (require 'tpp-mode)
+(autoload 'tpp-mode "tpp-mode" "TPP mode." t)
+(add-to-list 'auto-mode-alist '("\\.tpp$" . tpp-mode))
+
+; ===================================
 ; =                     company-mode
 ; ===================================
 (global-set-key [C-tab] 'elpy-company-backend)
@@ -390,7 +397,7 @@ With a prefix ARG always prompt for command to use."
 (eval-after-load "helm-gtags"
   '(progn
      (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-     (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
-     (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
+     ;; (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
+     ;; (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
      (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
      (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))

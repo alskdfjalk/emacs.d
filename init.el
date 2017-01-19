@@ -17,7 +17,7 @@
  '(ecb-layout-window-sizes nil)
  '(package-selected-packages
    (quote
-    (chinese-pyim-greatdict chinese-pyim chinese-pyim-wbdict helm-dash dash minimap yaml-mode sphinx-doc session rtags python-docstring projectile pdb-mode nose iedit helm goto-chg ggtags flymake-google-cpplint flycheck-irony evil elpy company-quickhelp company-irony-c-headers company-irony cmake-ide auto-complete-c-headers anaconda-mode ace-window ace-jump-mode)))
+    (w3 chinese-pyim-greatdict chinese-pyim chinese-pyim-wbdict helm-dash dash minimap yaml-mode sphinx-doc session rtags python-docstring projectile pdb-mode nose iedit helm goto-chg ggtags flymake-google-cpplint flycheck-irony evil elpy company-quickhelp company-irony-c-headers company-irony cmake-ide auto-complete-c-headers anaconda-mode ace-window ace-jump-mode)))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
