@@ -41,23 +41,24 @@
 (setq-default tabs-width 8)
 (setq-default indent-tabs-mode t)
 (setq sh-basic-offset 8)
+(setq default-tab-width 8)
 
 (add-to-list 'load-path "~/.emacs.d/packages")
 ;; 保存时删除多余的空格和TAB
 (global-set-key (kbd "C-x C-s") '(lambda()
-			       (interactive)
-			       (whitespace-cleanup)
-			       (save-buffer)))
+				   (interactive)
+				   (whitespace-cleanup)
+				   (save-buffer)))
 ;; 任意位置上/下新建一行
 (global-set-key (kbd "C-j") '(lambda()
-			       (interactive)
-			       (move-end-of-line 1)
-			       (newline-and-indent)))
+				   (interactive)
+				   (move-end-of-line 1)
+				   (newline-and-indent)))
 (global-set-key (kbd "C-o") '(lambda()
-			       (interactive)
-			       (beginning-of-line)
-			       (open-line 1)
-			       (indent-according-to-mode)))
+				   (interactive)
+				   (beginning-of-line)
+				   (open-line 1)
+				   (indent-according-to-mode)))
 
 
 ; ==============================================================
@@ -66,16 +67,16 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
-	     '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+		 '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 (add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+		 '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
+		 '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives
-	       '("gnu" . "http://elpa.gnu.org/packages/")
-	       ))
+		   '("gnu" . "http://elpa.gnu.org/packages/")
+		   ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        auto-complete                            ;;
@@ -141,6 +142,10 @@
 (add-hook 'sh-mode-hook '(lambda ()
 			   (autopair-mode)
 			   (hs-minor-mode)
+			   (setq tab-width 4)
+			   (setq indent-tabs-mode t)
+			   (setq sh-basic-offset 4)
+			   (setq default-tab-width 4)
 			   )
 	  )
 
@@ -171,8 +176,8 @@
 (setenv "PYTHONPATH" "~/.local/")
 (defadvice virtualenv-activate (after virtual-pdb)
   (custom-set-variables
-     '(gud-pdb-command-name
-       (concat virtualenv-active "/usr/bin/pdb" ))))
+	 '(gud-pdb-command-name
+	   (concat virtualenv-active "/usr/bin/pdb" ))))
 (ad-activate 'virtualenv-activate)
 (pyvenv-activate "~/.local")
 (when (require 'elpy nil t)
@@ -184,8 +189,8 @@
 ; (elpy-use-ipython)
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(setq-default python-indent 8)
-(setq-default py-indent-offset 8)
+(setq-default python-indent 4)
+(setq-default py-indent-offset 4)
 (setq flycheck-python-pycompile-executable "python3")
 ;; (setq
 ;;  python-shell-interpreter "python3"
@@ -209,15 +214,15 @@
 With a prefix ARG always prompt for command to use."
   (interactive "P")
   (when buffer-file-name
-    (shell-command (concat
-		    (cond
-		     ((and (not arg) (eq system-type 'darwin)) "open")
-		     ((and (not arg) (member system-type
-					     '(gnu gnu/linux gnu/kfreebsd)))
-		      "exo-open")
-		     (t (read-shell-command "Open current file with: ")))
-		    " "
-		    (shell-quote-argument buffer-file-name)))))
+	(shell-command (concat
+			(cond
+			 ((and (not arg) (eq system-type 'darwin)) "open")
+			 ((and (not arg) (member system-type
+						 '(gnu gnu/linux gnu/kfreebsd)))
+			  "exo-open")
+			 (t (read-shell-command "Open current file with: ")))
+			" "
+			(shell-quote-argument buffer-file-name)))))
 ;; 默认用 google-chrome 作浏览器
 (setq browse-url-generic-program "google-chrome")
 
@@ -269,6 +274,17 @@ With a prefix ARG always prompt for command to use."
   (interactive)
   (compile (concat "make clean ")))
  (global-set-key (kbd "C-c 3") 'quick-clean)
+
+
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;                           设置 JAVA 编译步骤                       ;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (defun java-compile ()
+  (interactive)
+  (compile (concat "/opt/langs/jdk1.8.0_144/bin/javac " (buffer-name (current-buffer)) "")))
+(defun on-java-loaded ()
+  (define-key java-mode-map (kbd "C-c 1") 'java-compile))
+(add-hook 'java-mode-hook 'on-java-loaded)
 
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  ;;                           设置GDB                                          ;;
@@ -347,23 +363,23 @@ With a prefix ARG always prompt for command to use."
 (add-to-list 'load-path "~/.emacs.d/packages/helm-gtags")
 (require 'helm-gtags)
 (setq-default c-set-style "cc-mode"
-	      c-basic-offset 8
-	      tab-width 8
-	      indent-tabs-mode t)
+		  c-basic-offset 8
+		  tab-width 8
+		  indent-tabs-mode t)
 (defun artm-guess-c-style ()
   (let ((style
 	 (assoc-default buffer-file-name artm-c-styles-alist
 			(lambda (pattern path)
 			  (or (not pattern)
-			      (and (stringp path)
+				  (and (stringp path)
 				   (string-match pattern path))))
 			;; factory default (in case you forget
 			;; to add (nil . "some style") to
 			;; artm-c-styles-alist
 			'(nil . "linux"))))
-    (cond
-     ((stringp style) (c-set-style style))
-     ((functionp style) (style)))))
+	(cond
+	 ((stringp style) (c-set-style style))
+	 ((functionp style) (style)))))
 (defun call-c-header-init ()
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
@@ -396,8 +412,8 @@ With a prefix ARG always prompt for command to use."
 
 (eval-after-load "helm-gtags"
   '(progn
-     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-     ;; (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
-     ;; (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
-     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
+	 (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+	 ;; (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
+	 ;; (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
+	 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+	 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))

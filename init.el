@@ -30,4 +30,5 @@
 (load-file "~/.emacs.d/org-mode.el")
 (load-file "~/.emacs.d/resetkey.el")
 (load-file "~/.emacs.d/pyim.el")
-;; (put 'upcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
