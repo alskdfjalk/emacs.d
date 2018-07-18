@@ -10,6 +10,8 @@
 (global-set-key (kbd "C--") 'undo)
 (global-whitespace-mode)
 (diff-mode)
+;; 禁止在 ORG 中转义下划线
+(setq org-export-with-sub-superscripts nil)
 ;; 高亮显示匹配括号
 (show-paren-mode 1)
 ;; 新建窗口时显示方式
@@ -28,6 +30,10 @@
 (setq column-number-mode t)
 ;;行号格式
 (setq linum-format "%4d ")
+;; 定制开机文字
+(setq initial-scratch-message
+	  "Hey, CJ, you are the best one, you can do everything you want.
+Have an amazing day.")
 (global-linum-mode t)
 ;; 默认浏览器
 (setq browse-url-browser-function 'google-chrome-stable)
@@ -77,6 +83,14 @@
   (add-to-list 'package-archives
 		   '("gnu" . "http://elpa.gnu.org/packages/")
 		   ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                fcitx                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; (add-to-list 'load-path "~/.emacs.d/fcitx")
+; (require 'fcitx)
+; (fcitx-aggressive-setup)
+; (setq fcitx-use-dbus t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        auto-complete                            ;;
@@ -301,8 +315,8 @@ With a prefix ARG always prompt for command to use."
 ; ===================================
 ; =                     minimap-mode
 ; ===================================
-(minimap-mode t)
-(setq minimap-window-location 'right)
+;; (minimap-mode t)
+;; (setq minimap-window-location 'right)
 
 ; ===================================
 ;                    company-quickhelp
@@ -413,7 +427,7 @@ With a prefix ARG always prompt for command to use."
 (eval-after-load "helm-gtags"
   '(progn
 	 (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-	 ;; (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
-	 ;; (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
+	 (define-key helm-gtags-mode-map (kbd "C-.") 'helm-gtags-dwim)
+	 (define-key helm-gtags-mode-map (kbd "C-,") 'helm-gtags-pop-stack)
 	 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 	 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))

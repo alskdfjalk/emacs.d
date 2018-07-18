@@ -14,18 +14,21 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(display-time-mode t)
  '(ecb-layout-window-sizes nil)
+ ; '(font-use-system-font t)
  '(package-selected-packages
    (quote
     (w3 chinese-pyim-greatdict chinese-pyim chinese-pyim-wbdict helm-dash dash minimap yaml-mode sphinx-doc session rtags python-docstring projectile pdb-mode nose iedit helm goto-chg ggtags flymake-google-cpplint flycheck-irony evil elpy company-quickhelp company-irony-c-headers company-irony cmake-ide auto-complete-c-headers anaconda-mode ace-window ace-jump-mode)))
- '(session-use-package t nil (session)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "AR PL UKai CN" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
-
+ '(session-use-package t nil (session))
+ '(show-paren-mode t))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(default ((t (:family "AR PL UKai CN" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
 (load-file "~/.emacs.d/custom.el")
 (load-file "~/.emacs.d/org-mode.el")
 (load-file "~/.emacs.d/resetkey.el")
